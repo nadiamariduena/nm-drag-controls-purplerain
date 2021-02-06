@@ -35,12 +35,6 @@ class TropicDragTest extends Component {
 
   */
   sceneSetup = () => {
-    //   You will need this to show the boxes
-    // ----------------
-    this.objects = [];
-    //----------------
-    this.vertex = new THREE.Vector3();
-    this.color = new THREE.Color();
     //
     //                WIDTH/HEIGHT
     // --------------------------------------------
@@ -49,23 +43,16 @@ class TropicDragTest extends Component {
     const height = this.eleModelBlOne.clientHeight;
     //
     // --------------------------------------------
-    //
-    //
-    // ---------------
-    // Create a camera
-    // ---------------
-    //
-    // 	Set a Field of View (FOV) of 75 degrees
-    // 	Set an Apsect Ratio of the inner width divided by the inner height of the window
-    //	Set the 'Near' distance at which the camera will start rendering scene objects to 2
-    //	Set the 'Far' (draw distance) at which objects will not be rendered to 1000
+
     this.camera = new THREE.PerspectiveCamera(
       75,
       window.innerWidth / window.innerHeight,
       1,
       1000
     );
-    this.camera.position.y = 10;
+    // this.camera.position.y = 10;
+    //
+    this.camera.position.z = 3;
     //
     this.scene = new THREE.Scene();
     // this.scene.background = new THREE.Color(0xffffff);
@@ -90,30 +77,10 @@ class TropicDragTest extends Component {
     this.eleModelBlOne.appendChild(this.renderer.domElement); // mount using React ref
     // document.appendChild(this.renderer.domElement);  //before
     //
-    this.blocker.appendChild(this.renderer.domElement);
 
     //
     //
-    //---------------------------
-    //    DRAG CONTROLS
-    //---------------------------
-    this.controls = new DragControls(
-      this.cubes,
-      this.camera,
-      renderer.domElement
-    );
-    //
-    //
-    //
-    //
-    //
-    //
-    //-------------------------------
-    //             KEYS
-    //-------------------------------
 
-    //
-    //
     //
     //
   };
@@ -127,149 +94,61 @@ class TropicDragTest extends Component {
 
   */
   addCustomSceneObjects = () => {
-    //
-    // ---------------
-    // floor Geometry
-    // ---------------
-    // How large do you want the floor, i added 2000 x 2000
-    this.floorGeometry = new THREE.PlaneGeometry(2000, 2000, 100, 100);
-    this.floorGeometry.rotateX(-Math.PI / 2);
-    //
-    //-------------------
-    // vertex displacement
-    //-------------------
-    //
-    let position = this.floorGeometry.attributes.position;
-    //
-    for (let i = 0, l = position.count; i < l; i++) {
-      // Color and Position attributes of bufferGeometry
-      //  check this exmaple to understand what is happening here:
-      /*
-      I am doing is making an array of colors (3 elements per 
-        vertex representing rgb) and then trying to add it as an 
-        attribute to the geometry, and I am trying to make vertices
-         of different heights different colors
-      
-      */
-      // https://stackoverflow.com/questions/50780187/three-js-color-and-position-attributes-of-buffergeometry-use-different-vertices
-      this.vertex.fromBufferAttribute(position, i);
-      this.vertex.x += Math.random() * 20 - 10;
-      this.vertex.y += Math.random() * 2;
-      this.vertex.z += Math.random() * 20 - 10;
-      position.setXYZ(i, this.vertex.x, this.vertex.y, this.vertex.z);
-    }
-    // ensure each face has unique vertices  **
-    this.floorGeometry = this.floorGeometry.toNonIndexed();
-    //
-    position = this.floorGeometry.attributes.position;
-    //
-    //
-    //
-    //
-    //--------------
-    // colorsFloor
-    //--------------
-    const colorsFloor = [];
-    //
-    // what makes the triangles of the floor have different colors
-    for (let i = 0, l = position.count; i < l; i++) {
-      //
-      // here you are generating random colors HSL
-      //   this.color is being picked from the variable on top "   this.color = new THREE.Color();"  linked to the Three modules
-      this.color.setHSL(
-        Math.random() * 0.3 + 0.5,
-        0.75,
-        Math.random() * 0.25 + 0.75
-      );
-      colorsFloor.push(this.color.r, this.color.g, this.color.b);
-    }
-    //
-    this.floorGeometry.setAttribute(
-      "color",
-      new THREE.Float32BufferAttribute(colorsFloor, 3)
-    );
-    //
-    //
-    this.floorMaterial = new THREE.MeshBasicMaterial({ vertexColors: true });
-    //
-    //
-    // ------------ Here you add to the scene all the ABOVE -----
-    this.floor = new THREE.Mesh(this.floorGeometry, this.floorMaterial);
-    this.scene.add(this.floor);
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    // ---------
-    // BOXES GEOMETRY
-    // ---------
-    // .toNonIndexed();  ensure each face has unique vertices
-    // SIZE of the boxes
-    this.boxGeometry = new THREE.BoxGeometry(20, 20, 20).toNonIndexed();
-    //
-    position = this.boxGeometry.attributes.position;
-    //
-    //
-    //--------------
-    // colors Box
-    //--------------
-    //
-    //
-    const colorsBox = [];
-    //
-    for (let i = 0, l = position.count; i < l; i++) {
-      this.color.setHSL(
-        // the different colors that will be picket randomly for the boxes, this "0.75" is the intensity of it ..will
-        // make them look kind of pastel.
-        Math.random() * 0.3 + 0.5,
-        0.75,
-        Math.random() * 0.25 + 0.75
-      );
-      colorsBox.push(this.color.r, this.color.g, this.color.b);
-    }
-    //
-    this.boxGeometry.setAttribute(
-      "color",
-      new THREE.Float32BufferAttribute(colorsBox, 3)
-    );
-    //
-    //
-    //
-    //
-    // the 500 correspond to the amount of boxes
-    // the material is MeshPhong, apparently its a good material to cast shadows
-    for (let i = 0; i < 500; i++) {
-      //
-      // the material of the box
-      const boxMaterial = new THREE.MeshPhongMaterial({
-        specular: 0xffffff,
-        flatShading: true,
-        vertexColors: true,
-        // push a colour per vertex
-      });
-      //   color
-      boxMaterial.color.setHSL(
-        Math.random() * 0.2 + 0.5,
-        0.75,
-        Math.random() * 0.25 + 0.75
-      );
-      // ---------
-      // BOX
-      // ---------
-      // Here you are positioning the 500 boxes randomly , playing with the x, y ,z
-      const box = new THREE.Mesh(this.boxGeometry, boxMaterial);
-      box.position.x = Math.floor(Math.random() * 20 - 10) * 20;
-      box.position.y = Math.floor(Math.random() * 20) * 20 + 10;
-      box.position.z = Math.floor(Math.random() * 20 - 10) * 20;
+    this.geometryDrag = new THREE.BoxGeometry();
+    //const material: THREE.MeshPhongMaterial = new THREE.MeshPhongMaterial({ color: 0xff0000, transparent: true })
+    //const cube: THREE.Mesh = new THREE.Mesh(geometry, material)
+    //scene.add(cube)
 
-      this.scene.add(box);
-      this.objects.push(box);
-    }
+    /*
+TYPESCRIPT to JS confuses me
+
+
+const material: THREE.MeshPhongMaterial[] = [
+    new THREE.MeshPhongMaterial({ color: 0xff0000, transparent: true }),
+    new THREE.MeshPhongMaterial({ color: 0x00ff00, transparent: true }),
+    new THREE.MeshPhongMaterial({ color: 0x0000ff, transparent: true })
+]
+
+I will keep this as a reference
+
+TypeScript to JavaScript - convertor
+
+https://extendsclass.com/typescript-to-javascript.html
+
+
+*/
+
+    this.materialDrag = [
+      new THREE.MeshPhongMaterial({ color: 0xff0000, transparent: true }),
+      new THREE.MeshPhongMaterial({ color: 0x00ff00, transparent: true }),
+      new THREE.MeshPhongMaterial({ color: 0x0000ff, transparent: true }),
+    ];
     //
+    this.cubesDrag = [
+      new THREE.Mesh(this.geometryDrag, this.materialDrag[0]),
+      new THREE.Mesh(this.geometryDrag, this.materialDrag[1]),
+      new THREE.Mesh(this.geometryDrag, this.materialDrag[2]),
+    ];
+    //
+    this.cubesDrag[0].position.x = -2;
+    this.cubesDrag[1].position.x = 0;
+    this.cubesDrag[2].position.x = 2;
+    //
+    // add "each" cubesDrag to the scene
+    this.cubesDrag.forEach((c) => this.scene.add(c));
+    //
+    //
+    //
+    //
+    //
+    //---------------------------
+    //    DRAG CONTROLS
+    //---------------------------
+    this.controls = new DragControls(
+      this.cubesDrag,
+      this.camera,
+      this.renderer.domElement
+    );
     //
     //----------------------------------
     //         BLENDER  MODELS
@@ -338,7 +217,16 @@ class TropicDragTest extends Component {
 
   startAnimationLoop = () => {
     //
+
     this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
+
+    this.cubesDrag[0].rotation.x += 0.01;
+    this.cubesDrag[0].rotation.y += 0.011;
+    this.cubesDrag[1].rotation.x += 0.012;
+    this.cubesDrag[1].rotation.y += 0.013;
+    this.cubesDrag[2].rotation.x += 0.014;
+    this.cubesDrag[2].rotation.y += 0.015;
+
     this.renderer.render(this.scene, this.camera);
   };
   /*
@@ -373,24 +261,14 @@ class TropicDragTest extends Component {
     return (
       <div className="scene-oblivion">
         {/* --------------------- */}
-        <div className="blocker" ref={(ref) => (this.blocker = ref)}>
-          {" "}
-        </div>{" "}
+
         {/* --------------------- */}
         {/* --------------------- */}
         <div
           className="modelBleOne"
           style={style}
           ref={(ref) => (this.eleModelBlOne = ref)}
-        >
-          <br />
-          <br />
-          Move: WASD
-          <br />
-          Jump: SPACE
-          <br />
-          Look: MOUSE
-        </div>
+        ></div>
         {/* --------------------- */}
         {/* --------------------- */}
         {/* --------------------- */}

@@ -210,8 +210,94 @@ import { DragControls } from "three/examples/jsm/controls/DragControls";
 ```
 
 <br>
+<br>
 
-#### Use it in your code
+# 🍦
+
+### ADD THE CUBES
+
+- This Cubes have nothing to do with the ones we had from the previous exercise.
+
+<!-- #### I think I am going to delete them to have a clear view of the cubes we are creating for this exercise. -->
+
+<br>
+
+#### 1) Here we add a box Geometry
+
+```javascript
+this.geometryDrag = new THREE.BoxGeometry();
+```
+
+<br>
+
+#### 2) Here we add a material/color to the Box Geometry
+
+- Since we have 3 boxes, we will add 3 colors
+
+```javascript
+this.materialDrag = [
+  new THREE.MeshPhongMaterial({ color: 0xff0000, transparent: true }),
+  new THREE.MeshPhongMaterial({ color: 0x00ff00, transparent: true }),
+  new THREE.MeshPhongMaterial({ color: 0x0000ff, transparent: true }),
+];
+```
+
+<br>
+
+#### 3) Here we compile the Mesh/box and the colors to it
+
+```javascript
+this.cubesDrag = [
+  new THREE.Mesh(this.geometryDrag, this.materialDrag[0]),
+  new THREE.Mesh(this.geometryDrag, this.materialDrag[1]),
+  new THREE.Mesh(this.geometryDrag, this.materialDrag[2]),
+];
+```
+
+<br>
+
+#### 4) Here we give a position to each box
+
+```javascript
+//
+this.cubesDrag[0].position.x = -2;
+this.cubesDrag[1].position.x = 0;
+this.cubesDrag[2].position.x = 2;
+//
+```
+
+<br>
+
+##### 5) AND FINALLY
+
+- We add the box and its content to the SCENE
+
+```javascript
+// add "each" cubesDrag to the scene
+this.cubesDrag.forEach((c) => this.scene.add(c));
+//
+```
+
+<br>
+<br>
+
+# 🌥️
+
+### REPLACE THE CAMERA SETTINGS
+
+```javascript
+// BEFORE
+this.camera.position.y = 10;
+
+// AFTER
+//
+this.camera.position.z = 3;
+```
+
+<br>
+<br>
+
+#### Use the { DragControls } it in your code
 
 ```javascript
 sceneSetup = () => {
@@ -224,4 +310,51 @@ sceneSetup = () => {
     renderer.domElement
   );
 };
+```
+
+<br>
+
+##### NOW YOU RAE ABLE TO SEE THE BOXES
+
+[<img src="./src/images/3boxes.jpg"/>]()
+
+<br>
+<br>
+<br>
+
+### ISSUE!!
+
+- **I COULDNT get the effect** of the drag, so I removed the previous CUBES to see better and **I changed the "CONTROLS" position**, from the scene setUp to the addCustomSceneObbjects function and **it WORKS**!!
+
+```javascript
+this.geometryDrag = new THREE.BoxGeometry();
+
+this.materialDrag = [
+  new THREE.MeshPhongMaterial({ color: 0xff0000, transparent: true }),
+  new THREE.MeshPhongMaterial({ color: 0x00ff00, transparent: true }),
+  new THREE.MeshPhongMaterial({ color: 0x0000ff, transparent: true }),
+];
+//
+this.cubesDrag = [
+  new THREE.Mesh(this.geometryDrag, this.materialDrag[0]),
+  new THREE.Mesh(this.geometryDrag, this.materialDrag[1]),
+  new THREE.Mesh(this.geometryDrag, this.materialDrag[2]),
+];
+//
+this.cubesDrag[0].position.x = -2;
+this.cubesDrag[1].position.x = 0;
+this.cubesDrag[2].position.x = 2;
+//
+// add "each" cubesDrag to the scene
+this.cubesDrag.forEach((c) => this.scene.add(c));
+//
+//
+//---------------------------
+//    DRAG CONTROLS
+//---------------------------
+this.controls = new DragControls(
+  this.cubesDrag,
+  this.camera,
+  this.renderer.domElement
+);
 ```
