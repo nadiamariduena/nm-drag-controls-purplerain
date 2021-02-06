@@ -378,3 +378,11 @@ this.controls = new DragControls(
   this.renderer.domElement
 );
 ```
+
+<br>
+
+# TRY IT
+
+- click on the image
+
+[<img src="./src/images/drag_ready.jpg"/>](https://nadiamariduena.github.io/nm-drag-controls-purplerain/)
