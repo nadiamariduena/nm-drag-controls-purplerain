@@ -312,6 +312,26 @@ sceneSetup = () => {
 };
 ```
 
+<!--
+    /*
+TYPESCRIPT to JS confuses me
+
+
+const material: THREE.MeshPhongMaterial[] = [
+    new THREE.MeshPhongMaterial({ color: 0xff0000, transparent: true }),
+    new THREE.MeshPhongMaterial({ color: 0x00ff00, transparent: true }),
+    new THREE.MeshPhongMaterial({ color: 0x0000ff, transparent: true })
+]
+
+I will keep this as a reference
+
+TypeScript to JavaScript - convertor
+
+https://extendsclass.com/typescript-to-javascript.html
+
+
+*/ -->
+
 <br>
 
 ##### NOW YOU RAE ABLE TO SEE THE BOXES

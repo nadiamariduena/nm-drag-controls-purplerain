@@ -129,7 +129,6 @@ class TropicalVoid extends Component {
     this.planeGeometry = new THREE.PlaneGeometry(100, 100, 50, 50);
     this.material = new THREE.MeshBasicMaterial({
       color: 0x00ff00,
-      wireframe: true,
     });
     this.plane = new THREE.Mesh(this.planeGeometry, this.material);
     this.plane.rotateX(-Math.PI / 2);

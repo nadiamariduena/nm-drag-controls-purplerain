@@ -58,15 +58,16 @@ class TropicDragTest extends Component {
     // this.scene.background = new THREE.Color(0xffffff);
     //
     //
+    this.loader = new THREE.TextureLoader();
     //
     // ---------------------------------------
     //                  RENDERER
     // ---------------------------------------
     //
     this.renderer = new THREE.WebGL1Renderer({
-      antialias: true, // will make the edges smooth
-      // set the transparency of the scene, otherwise its black
-      // alpha: true,
+      alpha: true,
+      // will make the edges smooth
+      antialias: true,
     });
     //
     this.renderer.setSize(width, height);
@@ -94,34 +95,25 @@ class TropicDragTest extends Component {
 
   */
   addCustomSceneObjects = () => {
+    //
+
+    //
+    //
+
     this.geometryDrag = new THREE.BoxGeometry();
     //const material: THREE.MeshPhongMaterial = new THREE.MeshPhongMaterial({ color: 0xff0000, transparent: true })
     //const cube: THREE.Mesh = new THREE.Mesh(geometry, material)
     //scene.add(cube)
 
-    /*
-TYPESCRIPT to JS confuses me
-
-
-const material: THREE.MeshPhongMaterial[] = [
-    new THREE.MeshPhongMaterial({ color: 0xff0000, transparent: true }),
-    new THREE.MeshPhongMaterial({ color: 0x00ff00, transparent: true }),
-    new THREE.MeshPhongMaterial({ color: 0x0000ff, transparent: true })
-]
-
-I will keep this as a reference
-
-TypeScript to JavaScript - convertor
-
-https://extendsclass.com/typescript-to-javascript.html
-
-
-*/
-
     this.materialDrag = [
+      new THREE.MeshPhongMaterial({
+        // wireframe: true,
+        // map: THREE.ImageUtils.loadTexture("/images/mario-bros-3.gif"),
+        color: 0xeeff00,
+        transparent: true,
+      }),
       new THREE.MeshPhongMaterial({ color: 0xff0000, transparent: true }),
-      new THREE.MeshPhongMaterial({ color: 0x00ff00, transparent: true }),
-      new THREE.MeshPhongMaterial({ color: 0x0000ff, transparent: true }),
+      new THREE.MeshPhongMaterial({ color: 0xff5a00, transparent: true }),
     ];
     //
     this.cubesDrag = [
@@ -140,6 +132,7 @@ https://extendsclass.com/typescript-to-javascript.html
     //
     //
     //
+
     //
     //---------------------------
     //    DRAG CONTROLS
@@ -150,6 +143,8 @@ https://extendsclass.com/typescript-to-javascript.html
       this.renderer.domElement
     );
     //
+    //
+
     //----------------------------------
     //         BLENDER  MODELS
     //----------------------------------
