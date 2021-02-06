@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/react/static/css/main.253a068e.chunk.css",
-    "main.js": "/react/static/js/main.c8a5a8ae.chunk.js",
-    "main.js.map": "/react/static/js/main.c8a5a8ae.chunk.js.map",
-    "runtime-main.js": "/react/static/js/runtime-main.96326aae.js",
-    "runtime-main.js.map": "/react/static/js/runtime-main.96326aae.js.map",
-    "static/js/2.888de5db.chunk.js": "/react/static/js/2.888de5db.chunk.js",
-    "static/js/2.888de5db.chunk.js.map": "/react/static/js/2.888de5db.chunk.js.map",
-    "static/js/3.ccedc4db.chunk.js": "/react/static/js/3.ccedc4db.chunk.js",
-    "static/js/3.ccedc4db.chunk.js.map": "/react/static/js/3.ccedc4db.chunk.js.map",
-    "index.html": "/react/index.html",
-    "static/css/main.253a068e.chunk.css.map": "/react/static/css/main.253a068e.chunk.css.map",
-    "static/js/2.888de5db.chunk.js.LICENSE.txt": "/react/static/js/2.888de5db.chunk.js.LICENSE.txt",
-    "static/media/main.scss": "/react/static/media/Ubuntu-Regular.fbdecfce.ttf"
+    "main.css": "/nm-drag-controls-purplerain/static/css/main.a5510dee.chunk.css",
+    "main.js": "/nm-drag-controls-purplerain/static/js/main.40c7df72.chunk.js",
+    "main.js.map": "/nm-drag-controls-purplerain/static/js/main.40c7df72.chunk.js.map",
+    "runtime-main.js": "/nm-drag-controls-purplerain/static/js/runtime-main.c048c271.js",
+    "runtime-main.js.map": "/nm-drag-controls-purplerain/static/js/runtime-main.c048c271.js.map",
+    "static/js/2.888de5db.chunk.js": "/nm-drag-controls-purplerain/static/js/2.888de5db.chunk.js",
+    "static/js/2.888de5db.chunk.js.map": "/nm-drag-controls-purplerain/static/js/2.888de5db.chunk.js.map",
+    "static/js/3.ccedc4db.chunk.js": "/nm-drag-controls-purplerain/static/js/3.ccedc4db.chunk.js",
+    "static/js/3.ccedc4db.chunk.js.map": "/nm-drag-controls-purplerain/static/js/3.ccedc4db.chunk.js.map",
+    "index.html": "/nm-drag-controls-purplerain/index.html",
+    "static/css/main.a5510dee.chunk.css.map": "/nm-drag-controls-purplerain/static/css/main.a5510dee.chunk.css.map",
+    "static/js/2.888de5db.chunk.js.LICENSE.txt": "/nm-drag-controls-purplerain/static/js/2.888de5db.chunk.js.LICENSE.txt",
+    "static/media/main.scss": "/nm-drag-controls-purplerain/static/media/Ubuntu-Regular.fbdecfce.ttf"
   },
   "entrypoints": [
-    "static/js/runtime-main.96326aae.js",
+    "static/js/runtime-main.c048c271.js",
     "static/js/2.888de5db.chunk.js",
-    "static/css/main.253a068e.chunk.css",
-    "static/js/main.c8a5a8ae.chunk.js"
+    "static/css/main.a5510dee.chunk.css",
+    "static/js/main.40c7df72.chunk.js"
   ]
 }
