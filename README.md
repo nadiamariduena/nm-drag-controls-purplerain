@@ -1,70 +1,188 @@
-# Getting Started with Create React App
+# 🌈 🌈 🌈
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# DRAG CONTROLS
 
-## Available Scripts
+<br>
+<br>
+<hr>
+<br>
+<br>
 
-In the project directory, you can run:
+# 🍨
 
-### `npm start`
+# VERTEX
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- I DIDNT EXPLAIN ABOUT THE LOGIC OF THE CUBES AND THE GEOMETRIES OF THE FLOOR, It can be confusing when using the x,y,z.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<br>
 
-### `npm test`
+#### To make the following code work, you need this 3 things:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```javascript
+  sceneSetup = () => {
+    //   You will need this to show the boxes
+    // ----------------
+    this.objects = [];
+    //----------------
+    this.vertex = new THREE.Vector3();
+    this.color = new THREE.Color();
+```
 
-### `npm run build`
+<br>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# 🍦 🐻 🍦
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<br>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### I will re use the same code of the geometries for the NEW test
 
-### `npm run eject`
+- RIGHT Now the scene of the boxes is blocked!
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Its blocked because I removed the pointer Lock functions
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<br>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```javascript
+// ---------------
+// floor Geometry
+// ---------------
+// How large do you want the floor, i added 2000 x 2000
+this.floorGeometry = new THREE.PlaneGeometry(2000, 2000, 100, 100);
+this.floorGeometry.rotateX(-Math.PI / 2);
+//
+//-------------------
+// vertex displacement
+//-------------------
+//
+let position = this.floorGeometry.attributes.position;
+//
+for (let i = 0, l = position.count; i < l; i++) {
+  // Color and Position attributes of bufferGeometry
+  //  check this exmaple to understand what is happening here:
+  /*
+      I am doing is making an array of colors (3 elements per 
+        vertex representing rgb) and then trying to add it as an 
+        attribute to the geometry, and I am trying to make vertices
+         of different heights different colors
+      
+      */
+  // https://stackoverflow.com/questions/50780187/three-js-color-and-position-attributes-of-buffergeometry-use-different-vertices
+  this.vertex.fromBufferAttribute(position, i);
+  this.vertex.x += Math.random() * 20 - 10;
+  this.vertex.y += Math.random() * 2;
+  this.vertex.z += Math.random() * 20 - 10;
+  position.setXYZ(i, this.vertex.x, this.vertex.y, this.vertex.z);
+}
+// ensure each face has unique vertices  **
+this.floorGeometry = this.floorGeometry.toNonIndexed();
+//
+position = this.floorGeometry.attributes.position;
+//
+//
+//
+//
+//--------------
+// colorsFloor
+//--------------
+const colorsFloor = [];
+//
+// what makes the triangles of the floor have different colors
+for (let i = 0, l = position.count; i < l; i++) {
+  //
+  // here you are generating random colors HSL
+  //   this.color is being picked from the variable on top "   this.color = new THREE.Color();"  linked to the Three modules
+  this.color.setHSL(
+    Math.random() * 0.3 + 0.5,
+    0.75,
+    Math.random() * 0.25 + 0.75
+  );
+  colorsFloor.push(this.color.r, this.color.g, this.color.b);
+}
+//
+this.floorGeometry.setAttribute(
+  "color",
+  new THREE.Float32BufferAttribute(colorsFloor, 3)
+);
+//
+//
+this.floorMaterial = new THREE.MeshBasicMaterial({ vertexColors: true });
+//
+//
+// ------------ Here you add to the scene all the ABOVE -----
+this.floor = new THREE.Mesh(this.floorGeometry, this.floorMaterial);
+this.scene.add(this.floor);
+//
+//
+//
+//
+//
+//
+//
+//
+// ---------
+// BOXES GEOMETRY
+// ---------
+// .toNonIndexed();  ensure each face has unique vertices
+// SIZE of the boxes
+this.boxGeometry = new THREE.BoxGeometry(20, 20, 20).toNonIndexed();
+//
+position = this.boxGeometry.attributes.position;
+//
+//
+//--------------
+// colors Box
+//--------------
+//
+//
+const colorsBox = [];
+//
+for (let i = 0, l = position.count; i < l; i++) {
+  this.color.setHSL(
+    // the different colors that will be picket randomly for the boxes, this "0.75" is the intensity of it ..will
+    // make them look kind of pastel.
+    Math.random() * 0.3 + 0.5,
+    0.75,
+    Math.random() * 0.25 + 0.75
+  );
+  colorsBox.push(this.color.r, this.color.g, this.color.b);
+}
+//
+this.boxGeometry.setAttribute(
+  "color",
+  new THREE.Float32BufferAttribute(colorsBox, 3)
+);
+//
+//
+//
+//
+// the 500 correspond to the amount of boxes
+// the material is MeshPhong, apparently its a good material to cast shadows
+for (let i = 0; i < 500; i++) {
+  //
+  // the material of the box
+  const boxMaterial = new THREE.MeshPhongMaterial({
+    specular: 0xffffff,
+    flatShading: true,
+    vertexColors: true,
+    // push a colour per vertex
+  });
+  //   color
+  boxMaterial.color.setHSL(
+    Math.random() * 0.2 + 0.5,
+    0.75,
+    Math.random() * 0.25 + 0.75
+  );
+  // ---------
+  // BOX
+  // ---------
+  // Here you are positioning the 500 boxes randomly , playing with the x, y ,z
+  const box = new THREE.Mesh(this.boxGeometry, boxMaterial);
+  box.position.x = Math.floor(Math.random() * 20 - 10) * 20;
+  box.position.y = Math.floor(Math.random() * 20) * 20 + 10;
+  box.position.z = Math.floor(Math.random() * 20 - 10) * 20;
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  this.scene.add(box);
+  this.objects.push(box);
+}
+//
+```
