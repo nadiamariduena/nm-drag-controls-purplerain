@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import * as THREE from "three";
-// import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls";
+import { DragControls } from "three/examples/jsm/controls/DragControls";
 //
 //
 const style = {
@@ -95,9 +95,13 @@ class TropicDragTest extends Component {
     //
     //
     //---------------------------
-    //
+    //    DRAG CONTROLS
     //---------------------------
-
+    this.controls = new DragControls(
+      this.cubes,
+      this.camera,
+      renderer.domElement
+    );
     //
     //
     //

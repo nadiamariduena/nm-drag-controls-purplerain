@@ -10,7 +10,9 @@
 
 # 🍨
 
-# VERTEX
+# BUT BEFORE...
+
+### Lets review the Floor Geometry and colors
 
 - I DIDNT EXPLAIN ABOUT THE LOGIC OF THE CUBES AND THE GEOMETRIES OF THE FLOOR, It can be confusing when using the x,y,z.
 
@@ -185,4 +187,41 @@ for (let i = 0; i < 500; i++) {
   this.objects.push(box);
 }
 //
+```
+
+<br>
+<br>
+<hr>
+<br>
+<br>
+
+# 🍦
+
+# let's get started
+
+[<img src="./src/images/roller-skater.gif"/>](https://www.youtube.com/watch?v=IKqV7DB8Iwg)
+
+<br>
+
+#### IMPORT the library from the "three" folder
+
+```javascript
+import { DragControls } from "three/examples/jsm/controls/DragControls";
+```
+
+<br>
+
+#### Use it in your code
+
+```javascript
+sceneSetup = () => {
+  //---------------------------
+  //    DRAG CONTROLS
+  //---------------------------
+  this.controls = new DragControls(
+    this.cubes,
+    this.camera,
+    renderer.domElement
+  );
+};
 ```
